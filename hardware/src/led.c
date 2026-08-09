@@ -35,3 +35,18 @@ void led_off(uint8_t led_num)
     }
     HAL_GPIO_WritePin(LED_GPIO_PORT, led_pins[led_num], GPIO_PIN_RESET);
 }
+
+/**
+ * @brief  单次亮灭：亮 on_ms 毫秒 → 灭 off_ms 毫秒
+ * @param  param: 亮灭参数结构体 (LED 编号、亮时长、灭时长)
+ */
+void blink(blink_param_t param)
+{
+    if (!is_valid_led(param.led_num)) {
+        return;
+    }
+    led_on(param.led_num);
+    HAL_Delay(param.on_ms);
+    led_off(param.led_num);
+    HAL_Delay(param.off_ms);
+}

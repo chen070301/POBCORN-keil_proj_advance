@@ -2,6 +2,8 @@
  * @file    led.h
  * @brief   LED 驱动头文件。
  *          头文件放声明和宏，具体实现放在 led.c。
+ *          本头文件只在 led.c / led_flow.c 等底层模块中 include，
+ *          main.c 不直接 include，从而通过 include 边界阻止 main.c 调用 led_on/led_off。
  */
 #ifndef LED_H
 #define LED_H
@@ -27,8 +29,20 @@ static inline uint8_t is_valid_led(uint8_t led_num)
     return (led_num < LED_MAX_NUM);
 }
 
+/* 一次亮灭的参数 */
+typedef struct
+{
+    uint8_t  led_num;   /* LED 编号 (0=LED1, 1=LED2, 2=LED3, 3=LED4) */
+    uint32_t on_ms;     /* 点亮持续时间 (毫秒) */
+    uint32_t off_ms;    /* 熄灭持续时间 (毫秒) */
+} blink_param_t;
+
+/* 底层单灯控制（仅供 blink / led_flow 等模块内部使用） */
 void led_on(uint8_t led_num);
 void led_off(uint8_t led_num);
+
+/* 封装 led_on / led_off + 延时的单次亮灭 */
+void blink(blink_param_t param);
 
 #ifdef __cplusplus
 }
