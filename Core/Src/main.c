@@ -109,7 +109,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    led_flow(250U);
+    led_flow_run();
   }
   /* USER CODE END 3 */
 }
