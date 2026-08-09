@@ -6,6 +6,7 @@
 #ifndef LED_H
 #define LED_H
 
+#include <stdint.h>
 #include "stm32h7xx_hal.h"
 
 #ifdef __cplusplus
@@ -18,10 +19,16 @@ extern "C" {
 #define LED2_PIN      GPIO_PIN_4
 #define LED3_PIN      GPIO_PIN_5
 #define LED4_PIN      GPIO_PIN_6
+#define LED_MAX_NUM   4U
 
-/* 种子工程先提供无参数版本，只操作 LED1；题目 1 将其扩展为带编号参数版本 */
-void led_on(void);
-void led_off(void);
+/* 内联函数：编号越界检查，非法编号返回 0 */
+static inline uint8_t is_valid_led(uint8_t led_num)
+{
+    return (led_num < LED_MAX_NUM);
+}
+
+void led_on(uint8_t led_num);
+void led_off(uint8_t led_num);
 
 #ifdef __cplusplus
 }
