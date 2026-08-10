@@ -19,9 +19,12 @@ extern "C" {
 #define LED3_PIN      GPIO_PIN_5
 #define LED4_PIN      GPIO_PIN_6
 
-/* 种子工程先提供无参数版本，只操作 LED1；题目 1 将其扩展为带编号参数版本 */
-void led_on(void);
-void led_off(void);
+/*
+ * LED 引脚掩码：每颗 LED 对应一个位，可按位或组合
+ * 例如 led_on(LED1_PIN | LED3_PIN) 同时点亮 LED1 和 LED3
+ */
+void led_on(uint8_t led_mask);
+void led_off(uint8_t led_mask);
 
 #ifdef __cplusplus
 }
